@@ -15,6 +15,7 @@ import session from 'express-session';
 const productManager= new ProductManager();
 import {initializePassport} from "./config/passport.config.js"
 import passport from "passport";
+import authRouter from "./routes/auth.router.js";
 
 const app = express ();
 
@@ -31,6 +32,7 @@ app.engine("handlebars",handlebars.engine()); //qué motor de plantillas uso//
 app.set('views', `${__dirname}/views`); //donde están las vistas, con path abs//
 app.set("view engine", "handlebars"); 
 app.use(express.static(`${__dirname}/public`));    
+app.use("/api/auth",authRouter);
 
 app.use(session({ //esto debe ir antes de setear las rutas
     store: MongoStore.create({
